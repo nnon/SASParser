@@ -20,3 +20,14 @@ input.indexOf("data .*?run;.*".r)
 //  .foreach(new SASStructure(" ", _))
 //  .foreach(s += new SASStructure("", _))
 //(new SASStructure("Type", _))
+
+
+
+var str = "hello, world"
+val patterns = List(new Regex("hello, (.*)", "substr"), new Regex("hi, (.*)", "substr"))
+val patterns2 = List(new Regex("hello, (.*)", "substr"), new Regex("hi, (.*)", "substr"))
+patterns.collectFirst{ p => str match { case p(substr) => substr } }
+
+
+val patternMapping = Map(("marker1" -> patterns), ("marker2" -> patterns2))
+patternMapping.collectFirst{ case (mark, pList) => pList.collectFirst{ p => str match { case p(substr) => (mark -> substr) } } }.flatten
